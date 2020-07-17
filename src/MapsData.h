@@ -44,6 +44,7 @@ public:
 	static void SetLongitude(float);
 	static void SetLatitude(float);
 	static void SetZoom(float);
+	static void SetSize(float, float);
 
 	static BMallocIO* Get();
 	static void AddHandler(BHandler*);

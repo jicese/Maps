@@ -4,7 +4,6 @@
  */
 
 #include "MapsWindow.h"
-
 #include <LayoutBuilder.h>
 #include <ListView.h>
 #include <ScrollView.h>
@@ -14,11 +13,12 @@
 #include "SearchForm.h"
 
 MapsWindow::MapsWindow() : BWindow(BRect(100, 100, 500, 500), "Maps",
-		B_TITLED_WINDOW, B_NOT_RESIZABLE | B_QUIT_ON_WINDOW_CLOSE) {
+		B_TITLED_WINDOW,  B_QUIT_ON_WINDOW_CLOSE) {
 // 	Initialize MapsData otherwise it only shows 0x0 tile, and might
 //	causes crash because scale isn't initialized to 1.5.
 	MapsData::Initialize(400, 400);
-	
+	// Mapbox image limit
+	SetSizeLimits(0,1280, 0, 1280);
 	SearchForm* searchForm = new SearchForm();	
 
 	MapsView* mapsView = new MapsView();
@@ -44,4 +44,11 @@ MapsWindow::MapsWindow() : BWindow(BRect(100, 100, 500, 500), "Maps",
 
 MapsWindow::~MapsWindow() {
 
+}
+
+void MapsWindow::SetLocation(float longitude, float latitude)
+{
+	MapsData::SetLongitude(longitude);
+	MapsData::SetLatitude(latitude);
+	MapsData::Retrieve();
 }

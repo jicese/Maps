@@ -13,10 +13,11 @@
 #include <ScrollView.h>
 #include <ListView.h>
 #include <LayoutBuilder.h>
+#include <IconUtils.h>
 #include "MapsData.h"
 
 MapsView::MapsView()
-		: BView("mapsView", B_WILL_DRAW) {
+		: BView("mapsView", B_WILL_DRAW|B_FRAME_EVENTS) {
 	bitmap		= NULL;				
 
 	virtualScroller = new VirtualScroller(this);
@@ -37,6 +38,22 @@ void MapsView::AddHandler(BHandler* handle) {
 void MapsView::Draw(BRect updateRect){
 	if (bitmap != NULL) {
 		SetViewBitmap(bitmap);
+		MapsVector mapsVector = MapsData::GetVector();		
+/*		
+		SetDrawingMode(B_OP_OVER);
+//		SetFont(&font);
+		SetLowColor(B_TRANSPARENT_COLOR);
+		SetHighColor(0, 0, 0);
+//		DrawString("+", BPoint(200,200));
+*/
+		SetDrawingMode(B_OP_OVER);
+		SetLowColor(B_TRANSPARENT_COLOR);
+		BBitmap iconBitmap(BRect(0, 0, 23, 23), B_RGBA32);
+		BIconUtils::GetVectorIcon(kPersonIcon, sizeof(kPersonIcon), &iconBitmap);
+		if (B_OK == iconBitmap.LockBits()) {
+			DrawBitmap(&iconBitmap, BPoint(mapsVector.width / 2 - 12,mapsVector.height/2 -12));
+			iconBitmap.UnlockBits();
+		}
 	}
 }
 
@@ -84,6 +101,12 @@ void MapsView::MouseUp(BPoint where) {
 	}
 }
 
+void MapsView::FrameResized(float width, float height) {
+	MapsData::SetSize(width, height);
+	MapsData::Retrieve();
+	printf("Resized\n");
+}
+
 void MapsView::MouseMoved(BPoint where, uint32 code, const BMessage* dragMessage) {
 	if (IsMouseDown) {
 		MapsVector mapsVector = MapsData::GetVector();
@@ -98,7 +121,17 @@ void MapsView::MouseMoved(BPoint where, uint32 code, const BMessage* dragMessage
 }
 
 void MapsView::MessageReceived(BMessage* message) {
+	float lon, lat;
+	
 	switch (message->what) {
+		case kSetMapLocation: {
+			message->FindFloat("lon", &lon);
+			message->FindFloat("lat", &lat);
+			MapsData::SetLongitude(lon);
+			MapsData::SetLatitude(lat);
+			MapsData::Retrieve();
+		}
+		break;
 		case MAPDATA_UPDATE: {
 			bitmap = BTranslationUtils::GetBitmap(MapsData::Get());
 			IsTransformNext = false;

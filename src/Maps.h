@@ -14,8 +14,9 @@ class Maps : public BApplication {
 public:
 	Maps();
 	~Maps();	
-private:
 	MapsWindow* mapsWindow;
+	void MessageReceived(BMessage *message);
+private:
 };
 
 #endif // MAPS_H

@@ -44,7 +44,7 @@ thread_id			MapsData::thread;
 BUrlRequest*		MapsData::request	= NULL;
 MapsData_Listener*	MapsData::listener	= NULL;
 
-BString MapsData::baseUrl("https://api.mapbox.com/styles/v1/mapbox/streets-v8/static/%f,%f,%f,%f,%f/%dx%d?access_token=pk.eyJ1IjoicmFlZmFsZGhpYSIsImEiOiJjaXdnN3J0YTkwMTV1MnVraXgzNGowbTBuIn0.9RYCJF1sfuUD86QRuBItYw&attribution=false&logo=false");
+BString MapsData::baseUrl("https://api.mapbox.com/styles/v1/mapbox/outdoors-v11/static/%f,%f,%f,%f,%f/%dx%d?access_token=pk.eyJ1IjoicmFlZmFsZGhpYSIsImEiOiJjaXdnN3J0YTkwMTV1MnVraXgzNGowbTBuIn0.9RYCJF1sfuUD86QRuBItYw&attribution=false&logo=false");
 
 MapsData::MapsData() {
 
@@ -94,6 +94,11 @@ void MapsData::SetLatitude(float latitude) {
 void MapsData::SetZoom(float zoom) {
 	mapsVector.zoom = zoom;
 	mapsVector.scale = DEFAULT_BPOINT_SCALE * pow(2.0, mapsVector.zoom);
+}
+
+void MapsData::SetSize(float width, float height) {
+	mapsVector.width = width;
+	mapsVector.height = height;
 }
 
 void MapsData::AddHandler(BHandler* handle) {

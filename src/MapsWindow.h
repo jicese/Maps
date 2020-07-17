@@ -12,6 +12,7 @@ class MapsWindow : public BWindow {
 public:
 	MapsWindow();
 	~MapsWindow();
+	void SetLocation(float longitude, float latitude);
 };
 
 #endif // MAPSWINDOW_H

@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <tinyxml.h>
+//#include <tinyxml.h>
 
 #include <LayoutBuilder.h>
 #include <TextView.h>
@@ -239,7 +239,7 @@ void SearchResultList::MessageReceived(BMessage* message) {
 			Hide();
 		}break;
 		case M_SEARCHRESULTLIST_ON_RESULT: {
-			BString xmlData((const char*)result->Buffer());
+/*			BString xmlData((const char*)result->Buffer());
 
 			TiXmlDocument document;
 			document.Parse(xmlData);
@@ -270,7 +270,7 @@ void SearchResultList::MessageReceived(BMessage* message) {
 				itemList.insert(std::pair<int, SearchResultList_Data*>(index, itemData));
 				index++;
 			}
-			// The list will only show AFTER all the data is inserted into the list.
+*/			// The list will only show AFTER all the data is inserted into the list.
 			if (scrollBar != NULL) {
 				scrollBar->Show();
 			}
