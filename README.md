@@ -3,7 +3,7 @@
 ![Screenshot](screenshot_maps.png)
 
 Maps application for Haiku.
-This version has been update with a center marker, resizability, messagehandling for updating location and minor tweaks. Search currently disabled.
+This version has been updated with a center marker, resizability, messagehandling for updating location and minor tweaks. Search currently disabled.
 
 
 ### Building
